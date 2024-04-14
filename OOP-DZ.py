@@ -1,3 +1,49 @@
+    # Класс BaseMethod включает повторяющиеся методы (вычисление среднего значения оценок и их сравнение)
+# Данный класс будет родительским по отношению к классам Student и Lecturer
+class BaseMethod:
+    def avg(self):
+        average = []
+        for i in self.grades.values():
+            for j in i:
+                average.append(j)
+        self.avg_grades = round((sum(average) / len(average)), 2)
+        return self.avg_grades
+
+    def __lt__(self, other):
+        if ((isinstance(self, Student)==isinstance(other, Student))==True) or ((isinstance(self, Lecturer)==isinstance(other, Lecturer))==True):
+            return self.avg() < other.avg()
+        else:
+            return None
+
+    def __le__(self, other):
+        if ((isinstance(self, Student)==isinstance(other, Student))==True) or ((isinstance(self, Lecturer)==isinstance(other, Lecturer))==True):
+            return self.avg() <= other.avg()
+        else:
+            return None
+
+    def __eq__(self, other):
+        if ((isinstance(self, Student)==isinstance(other, Student))==True) or ((isinstance(self, Lecturer)==isinstance(other, Lecturer))==True):
+            return self.avg() == other.avg()
+        else:
+            return None
+
+    def __ne__(self, other):
+        if ((isinstance(self, Student)==isinstance(other, Student))==True) or ((isinstance(self, Lecturer)==isinstance(other, Lecturer))==True):
+            return self.avg() != other.avg()
+        else:
+            return None
+
+# Класс Student (студенты)
+class Student (BaseMethod):
+    def __init__(self, name, surname, gender):
+        self.name = name
+        self.surname = surname
+        self.gender = gender
+        self.finished_courses = []
+        self.courses_in_progress = []
+        self.grades = {}
+        self.avg_grades = 0
+
     # Оценка работы лекторов
     def rate_lec(self, lecturer, course, grade):
         if isinstance(lecturer, Lecturer) and course in self.courses_in_progress and course in lecturer.courses_attached and 0 < grade <= 10:
@@ -58,3 +104,5 @@ class Reviewer(Mentor):
         res = (f'Имя: {self.name}\n'
                f'Фамилия: {self.surname}')
         return res
+    
+    
